@@ -16,6 +16,7 @@ NLW 5 TRILHA REACT NATIVE
   json-server ./src/services/server.json --host 192.168.0.107 --port 3333
   }
 - expo install react-native-svg
+- expo install lottie-react-native // lottie , biblioteca de animações para load
 
 Criar um arquivo na raiz ( custom.d.ts), para importar imagem com ts
 
