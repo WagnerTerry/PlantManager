@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
   View,
+  Text,
+  StyleSheet,
   FlatList,
   ActivityIndicator,
 } from "react-native";
+import { EnviromentButton } from "../components/EnviromentButton";
+import { useNavigation } from "@react-navigation/core";
+
+import { Header } from "../components/Header";
+import { PlantCardPrimary } from "../components/PlantCardPrimary";
+import { Load } from "../components/Load";
+import { PlantProps } from "../libs/storage";
+
+import api from "../services/api";
 
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 
-import { Header } from "../components/Header";
-import { EnviromentButton } from "../components/EnviromentButton";
-import { PlantCardPrimary } from "../components/PlantCardPrimary";
-import { Load } from "../components/Load";
-
-import api from "../services/api";
-import { useNavigation } from "@react-navigation/core";
-import { PlantProps } from "../libs/storage";
 interface EnviromentProps {
   key: string;
   title: string;
 }
 
 export function PlantSelect() {
-  const [enviroments, setEnviroments] = useState<EnviromentProps[]>([]);
+  const [enviroments, setEnvirtoments] = useState<EnviromentProps[]>([]);
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
   const [enviromentSelected, setEnviromentSelected] = useState("all");
@@ -52,13 +53,11 @@ export function PlantSelect() {
       `plants?_sort=name&_order=asc&_page=${page}&_limit=8`
     );
 
-    if (!data) {
-      return setLoading(true);
-    }
+    if (!data) return setLoading(true);
 
     if (page > 1) {
       setPlants((oldValue) => [...oldValue, ...data]);
-      setFilteredPlants((oldValues) => [...oldValues, ...data]);
+      setFilteredPlants((oldValue) => [...oldValue, ...data]);
     } else {
       setPlants(data);
       setFilteredPlants(data);
@@ -69,9 +68,7 @@ export function PlantSelect() {
   }
 
   function handleFetchMore(distance: number) {
-    if (distance < 1) {
-      return;
-    }
+    if (distance < 1) return;
 
     setLoadingMore(true);
     setPage((oldValue) => oldValue + 1);
@@ -87,7 +84,7 @@ export function PlantSelect() {
       const { data } = await api.get(
         "plants_environments?_sort=title&_order=asc"
       );
-      setEnviroments([
+      setEnvirtoments([
         {
           key: "all",
           title: "Todos",
@@ -103,16 +100,15 @@ export function PlantSelect() {
     fetchPlants();
   }, []);
 
-  if (loading) {
-    return <Load />;
-  }
+  if (loading) return <Load />;
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Header />
 
         <Text style={styles.title}>Em qual ambiente</Text>
-        <Text style={styles.subtitle}>Você quer colocar sua planta?</Text>
+        <Text style={styles.subtitle}>você quer colocar sua planta?</Text>
       </View>
 
       <View>
@@ -173,10 +169,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   subtitle: {
+    fontFamily: fonts.text,
     fontSize: 17,
-    color: colors.heading,
-    fontFamily: fonts.heading,
     lineHeight: 20,
+    color: colors.heading,
   },
   enviromentList: {
     height: 40,
@@ -184,6 +180,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginLeft: 32,
     marginVertical: 32,
+    paddingRight: 32,
   },
   plants: {
     flex: 1,

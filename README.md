@@ -27,6 +27,7 @@ NLW 5 TRILHA REACT NATIVE
 - expo install lottie-react-native // lottie , biblioteca de animações para load
 - expo install @react-native-async-storage/async-storage // salva os dados no dispositivo
 - expo install @react-native-community/datetimepicker
+- expo install expo-notifications
 - yarn add date-fns
 - yarn add @react-navigation/bottom-tabs
 
